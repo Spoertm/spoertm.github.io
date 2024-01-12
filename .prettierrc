@@ -3,5 +3,6 @@
   "useTabs": false,
   "plugins": ["prettier-plugin-tailwindcss"],
   "htmlWhitespaceSensitivity": "ignore",
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "printWidth": 160
 }
