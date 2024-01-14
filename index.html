@@ -1,61 +1,487 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-	<meta charset="utf-8">
-	<meta name="description"
-	content="Ali Mohsen's personal website, where he describes himself and the technologies he works with.">
-	<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport">
-	<base href="/">
+    <meta charset="utf-8" />
+
     <title>Ali Mohsen</title>
-    <link href="Output/app.css" rel="stylesheet">
-	<link href="Assets/TabIcon.ico" rel="tab icon" type="image/x-icon">
+    <meta name="description" content="Software Developer" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:url" content="https://alimohsen.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ali Mohsen" />
+    <meta property="og:description" content="Software Developer" />
+    <meta property="og:image" content="/Assets/AM-logo-1024.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="Website logo" />
+    <meta property="og:site_name" content="Ali Mohsen" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta property="twitter:url" content="https://alimohsen.dev/" />
+    <meta name="twitter:title" content="Ali Mohsen" />
+    <meta name="twitter:description" content="Software Developer" />
+    <meta name="twitter:image" content="/Assets/AM-logo-1024.png" />
+
+    <meta name="theme-color" content="#264bc7" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <base href="/" />
+    <link href="Output/app.css" rel="stylesheet" />
+    <link href="Assets/TabIcon.ico" rel="tab icon" type="image/x-icon" />
   </head>
 
-  <body class="mx-auto max-w-screen-lg px-3 pb-10 bg-gray-900 text-white">
+  <body class="bg-gradient-to-b from-[#0d2164] to-gray-800 px-3 pb-16 text-white">
+    <!-- Header -->
+    <div class="mx-auto flex flex-wrap justify-between px-2 py-6 drop-shadow-md sm:max-w-screen-2xl lg:px-24">
+      <button class="text-xl font-semibold sm:text-2xl">Ali Mohsen</button>
+      <nav>
+        <div class="grid grid-cols-2 place-items-center gap-1 sm:gap-2">
+          <a href="https://github.com/Spoertm" target="_blank" class="flex flex-row items-center justify-center rounded p-2 hover:bg-white/15">
+            <img alt="GitHub logo" class="h-5 w-5 invert sm:mr-2" src="Assets/github-logo.svg" />
+            <span class="hidden sm:block">GitHub</span>
+          </a>
 
-	<div class="flex flex-col gap-y-2 py-6 sm:flex-row sm:gap-y-0 items-center sm:justify-between">
-		<button class="font-bold text-2xl">
-			Ali Mohsen
-		</button>
-		<nav>
-			<ul class="flex gap-x-3 font-medium text-lg">
-				<li>
-					<button class="flex flex-row items-center rounded px-1 py-2 hover:bg-slate-700">
-						<img alt="GitHub logo" src="Assets/github-logo.svg" class="invert w-5 h-5 mr-2">
-						<a href="https://github.com/Spoertm" target="_blank">GitHub</a>
-					</button>
-				</li>
-				<li>
-					<button class="flex flex-row items-center rounded px-1 py-2 hover:bg-slate-700">
-						<img alt="LinkedIn logo" src="Assets/LinkedIn-logo.svg" class="w-5 h-5 mr-2">
-						<a href="https://www.linkedin.com/in/ali-mohsen-ab7543237/" target="_blank">LinkedIn</a>
-					</button>
-				</li>
-			</ul>
-		</nav>
-	</div>
+          <a
+            href="https://www.linkedin.com/in/ali-mohsen-ab7543237/"
+            target="_blank"
+            class="flex flex-row items-center justify-center rounded p-2 hover:bg-white/15">
+            <img alt="LinkedIn logo" class="h-5 w-5 sm:mr-2" src="Assets/LinkedIn-logo.svg" />
+            <span class="hidden sm:block">LinkedIn</span>
+          </a>
+        </div>
+      </nav>
+    </div>
 
-	<div class="mt-6 text-gray-100">
-		<h1 class="text-4xl">Hi 👋</h1>
-		<p class="mt-6 text-xl">
-			I'm Ali. I'm a student pursuing a master's degree in Computer Science. Needless to say I like programming and building applications, especially within the .Net platform.
-		</p>
+    <div class="mx-auto h-screen pt-[5vh] text-center sm:w-[85%] sm:pt-[15vh]">
+      <!-- Bottom arrow clickable area -->
+      <div
+        id="scroll-indicator"
+        class="py- absolute bottom-0 left-1/2 -translate-x-1/2 transform cursor-pointer from-transparent via-white/30 to-transparent px-[45vw] transition duration-300 hover:bg-gradient-to-r sm:px-[30vw]"
+        onclick="hideArrow()">
+        <!-- Bottom floating arrow -->
+        <div class="animate-floatUpDown pb-5">
+          <span class="mt-4 block h-6 w-6 -rotate-45 border-b-4 border-l-4 border-white"></span>
+        </div>
+      </div>
 
-		<p class="mt-6 text-xl">
-			Some of the things I've worked on:
-		</p>
+      <h1 class="text-4xl">Hi</h1>
+      <p class="mt-14 text-xl sm:text-2xl">I'm a software developer pursuing a master's degree in Computer Science.</p>
+      <p class="mt-12 text-lg sm:mt-6 sm:text-xl">
+        I like
+        <code class="text-[#FFB400]" id="interestSpan"></code>
+      </p>
+      <p class="mt-20">
+        Feel free to check out my projects on
+        <a class="link" href="https://github.com/Spoertm" target="_blank">my GitHub page</a>
+      </p>
+    </div>
 
-		<ul class="pl-6 sm:pl-10 list-disc list-outside mt-3 text-xl">
-			<li>Application back-ends, web apps, and APIs built with .NET Core, ASP.NET Core, EF Core, and Spring.</li>
-			<li class="mt-6 sm:mt-2">CLIs and interfaces built with Blazor, WinForms, HTML, Javascript, CSS, TailwindCSS, and XML.</li>
-			<li class="mt-6 sm:mt-2">Languages such as C#, Java, Python, C, and SQL.</li>
-		</ul>
+    <div class="mx-auto max-w-screen-lg text-gray-100">
+      <!--Technologies worked with-->
+      <p class="mb-7 text-center text-2xl tracking-tight">Technologies I've worked with</p>
+      <div class="grid grid-flow-row items-stretch gap-4 sm:grid-flow-col" id="card-container">
+        <div class="group rounded border-2 border-blue-900 p-4 transition duration-300 ease-in-out hover:bg-white/5">
+          <div class="flex flex-row items-center justify-center gap-3">
+            <svg class="h-7 w-7 stroke-emerald-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <p>Backend</p>
+          </div>
+          <p class="pt-5 text-center">.NET Core, ASP.NET Core, EF Core, and Spring.</p>
+        </div>
+        <div class="group rounded border-2 border-blue-900 p-4 transition duration-300 ease-in-out hover:bg-white/5">
+          <div class="flex flex-row items-center justify-center gap-3">
+            <svg
+              class="h-7 w-7 stroke-[#b878f8]"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+            </svg>
+            <p>Frontend</p>
+          </div>
+          <p class="pt-5 text-center">Blazor, WinForms, HTML, Javascript, CSS, TailwindCSS, and XML.</p>
+        </div>
+        <div class="group rounded border-2 border-blue-900 p-4 transition duration-300 ease-in-out hover:bg-white/5">
+          <div class="flex flex-row items-center justify-center gap-3">
+            <svg class="h-7 w-7 stroke-[#f76464]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p>Programming languages</p>
+          </div>
+          <p class="pt-5 text-center">C#, Java, Python, Typescript, C, SQL, and PostgreSQL.</p>
+        </div>
+      </div>
 
-		<p class="mt-10 text-xl">
-			Feel free to check out my projects on
-			<a class="link" href="https://github.com/Spoertm" target="_blank">my GitHub page</a>.
-		</p>
-	</div>
+      <hr class="my-16 h-px border-0 bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
 
+      <!-- Projects -->
+      <div class="mx-auto sm:max-w-3xl">
+        <div class="mb-12 text-center text-2xl tracking-tight text-white">Projects I've worked on</div>
+
+        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
+          <time
+            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
+            Jan, 2023 —
+          </time>
+
+          <div class="mb-4 text-xl font-bold">Master's thesis</div>
+          <p class="text-center text-slate-300">
+            My thesis,
+            <span class="font-semibold italic">Integrated Reflexion Modelling and 3D Source Code Visualization,</span>
+            focuses on evaluating the usefulness of incorporating architectural aspects into 3D source code visualization. This was done by adding functionality
+            to the software tool
+            <a href="https://softvis3d.com/" target="_blank" class="link inline-block">Softvis3D</a>
+            then conducting a small-scale user study.
+          </p>
+          <div class="navigation-wrapper">
+            <div id="masters-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
+              <img
+                alt=""
+                src="Assets/Masters/FerriesBetweenIslands.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="View of dependencies between houses"
+                src="Assets/Masters/ClassDependencies.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="A 'reflexion island' with its dependencies"
+                src="Assets/Masters/Island.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="h-20 border-l-2 border-blue-200/30"></div>
+        </div>
+
+        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
+          <time
+            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
+            Aug, 2022
+          </time>
+          <div class="mb-4 text-xl font-bold">Tourist application</div>
+          <p class="text-center text-slate-300">
+            A university project where I worked in a team to build an Android tourist application and a developer portal website. The application was built in
+            Java and the website with
+            <a class="link inline-block" target="_blank" href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">.NET Blazor</a>
+            WASM. I was responsible for most of the UI/UX elements in the developer portal and the Android application, and generally involved in most parts of
+            development.
+          </p>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="h-20 border-l-2 border-blue-200/30"></div>
+        </div>
+
+        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
+          <time
+            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
+            Aug, 2020
+          </time>
+          <div class="mb-4 text-xl font-bold">Corona Tracker</div>
+          <p class="text-center text-slate-300">
+            A university project where I worked in a team to build a prototype Corona Tracker application for Android. I was responsible for the UI/UX elements
+            of the application.
+          </p>
+          <div class="navigation-wrapper">
+            <div id="icorona-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
+              <img
+                alt="iCorona app login page"
+                src="Assets/icorona/LoginPage.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app update status"
+                src="Assets/icorona/UpdateStatus.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app global data page"
+                src="Assets/icorona/GlobalDataPage.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app update status"
+                src="Assets/icorona/StatusPage.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="h-20 border-l-2 border-blue-200/30"></div>
+        </div>
+
+        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
+          <time
+            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
+            Jan, 2020 —
+          </time>
+          <div class="mb-4 text-xl font-bold">Personal projects</div>
+          <p class="text-center text-slate-300">
+            <a class="link inline-flex items-center" target="_blank" href="https://github.com/Spoertm/Clubber">
+              <img alt="GitHub logo" class="absolute h-4 w-4 invert" src="Assets/github-logo.svg" />
+              <span class="ml-5">Clubber</span>
+            </a>
+            and
+            <a class="link inline-flex items-center" target="_blank" href="https://github.com/Spoertm/Swarmer">
+              <img alt="GitHub logo" class="absolute h-4 w-4 invert" src="Assets/github-logo.svg" />
+              <span class="ml-5">Swarmer</span>
+            </a>
+            are two projects I've worked on in my spare time which got me into the .NET platform. Throughout the years, I've incorporated a few architectural
+            and design patterns into the projects, such as
+            <span class="italic">Clean Architecture,</span>
+            <span class="italic">Dependency Injection,</span>
+            <span class="italic">Repository Pattern,</span>
+            and
+            <span class="italic">unit testing.</span>
+          </p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
+<script>
+  new KeenSlider(
+    "#masters-slider",
+    {
+      loop: true,
+      slides: {
+        perView: 1,
+      },
+    },
+    [navigation],
+  );
+
+  new KeenSlider(
+    "#kep-slider",
+    {
+      loop: true,
+      breakpoints: {
+        "(min-width: 640px)": {
+          slides: { perView: 1 },
+        },
+      },
+      slides: { perView: 1 },
+    },
+    [navigation],
+  );
+
+  new KeenSlider(
+    "#icorona-slider",
+    {
+      loop: true,
+      breakpoints: {
+        "(min-width: 640px)": {
+          slides: { perView: 3 },
+        },
+      },
+      slides: { perView: 1 },
+    },
+    [navigation],
+  );
+
+  function navigation(slider) {
+    let wrapper, dots, arrowLeft, arrowRight;
+
+    function markup() {
+      wrapperMarkup();
+      dotMarkup();
+      arrowMarkup();
+    }
+
+    function createDiv(className) {
+      var div = document.createElement("div");
+      div.classList.add(...className.split(" "));
+      return div;
+    }
+
+    function arrowMarkup() {
+      arrowLeft = createDiv("arrow arrow--left");
+      arrowLeft.addEventListener("click", () => slider.prev());
+      arrowRight = createDiv("arrow arrow--right");
+      arrowRight.addEventListener("click", () => slider.next());
+
+      wrapper.appendChild(arrowLeft);
+      wrapper.appendChild(arrowRight);
+    }
+
+    function wrapperMarkup() {
+      wrapper = createDiv("navigation-wrapper");
+      slider.container.parentNode.appendChild(wrapper);
+      wrapper.appendChild(slider.container);
+    }
+
+    function dotMarkup() {
+      dots = createDiv("dots");
+      slider.track.details.slides.forEach((_e, idx) => {
+        var dot = createDiv("dot");
+        dot.addEventListener("click", () => slider.moveToIdx(idx));
+        dots.appendChild(dot);
+      });
+
+      wrapper.appendChild(dots);
+    }
+
+    function updateClasses() {
+      var slide = slider.track.details.rel;
+      Array.from(dots.children).forEach(function (dot, idx) {
+        idx === slide ? dot.classList.add("dot--active") : dot.classList.remove("dot--active");
+      });
+    }
+
+    slider.on("created", () => {
+      markup();
+      updateClasses();
+    });
+    slider.on("slideChanged", () => updateClasses());
+  }
+
+  const scrollThreshold = (scrollPercentage) => (scrollPercentage / 100) * window.innerHeight;
+
+  function hideArrow() {
+    const scrollIndicator = document.getElementById("scroll-indicator");
+    scrollIndicator.style.opacity = "0";
+  }
+
+  function showArrow() {
+    const scrollIndicator = document.getElementById("scroll-indicator");
+    scrollIndicator.style.opacity = "100";
+  }
+
+  // Scroll down on click
+  document.getElementById("scroll-indicator").addEventListener("click", () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+
+    hideArrow();
+  });
+
+  // Show arrow when scrolled back to top
+  window.addEventListener("scroll", () => {
+    if (window.scrollY <= scrollThreshold(20)) {
+      const scrollIndicator = document.getElementById("scroll-indicator");
+      showArrow();
+    }
+
+    if (window.scrollY >= scrollThreshold(20)) {
+      const scrollIndicator = document.getElementById("scroll-indicator");
+      hideArrow();
+    }
+  });
+
+  async function typeWriteInterests() {
+    const interests = [".NET", "Software Architecture", "UI/UX Design", "Software Development"];
+    const interestSpan = document.getElementById("interestSpan");
+
+    while (true) {
+      for (var currentInterest of interests) {
+        for (var i = interestSpan.innerHTML.length; i > 0; i--) {
+          interestSpan.innerHTML = interestSpan.innerHTML.slice(0, -1);
+          await sleep(12);
+        }
+
+        for (var letter of currentInterest) {
+          interestSpan.innerHTML += letter;
+          await sleep(40);
+        }
+
+        await sleep(1300);
+      }
+    }
+  }
+
+  typeWriteInterests();
+
+  const cards = document.getElementById("card-container").children;
+  for (const card of cards) {
+    card.addEventListener("mouseenter", () => {
+      for (const otherCard of cards) {
+        if (otherCard !== card) {
+          otherCard.style.opacity = "0.2";
+        }
+      }
+    });
+
+    card.addEventListener("mouseleave", () => {
+      for (const otherCard of cards) {
+        if (otherCard !== card) {
+          otherCard.style.opacity = "1";
+        }
+      }
+    });
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+</script>
+
+<style>
+  @keyframes floatUpDown {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-floatUpDown {
+    animation: floatUpDown 1.15s infinite;
+  }
+
+  .navigation-wrapper {
+    position: relative;
+    margin-top: 2rem;
+  }
+  .dots {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .dot {
+    cursor: pointer;
+    border: none;
+    width: 10px;
+    height: 10px;
+    background: #6a8ca8;
+    border-radius: 50%;
+    margin: 0px 5px;
+    padding: 5px;
+  }
+  .dot--active {
+    background: #46b8ff;
+  }
+  .arrow {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 40%;
+  }
+  .arrow--left {
+    left: 5px;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
+  }
+  .arrow--right {
+    left: auto;
+    right: 5px;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z'%3E%3C/path%3E%3C/svg%3E");
+  }
+</style>
