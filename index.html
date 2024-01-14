@@ -4,26 +4,28 @@
     <meta charset="utf-8" />
 
     <title>Ali Mohsen</title>
-    <meta name="description" content="My personal website." />
+    <meta name="description" content="Software Developer" />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:url" content="https://alimohsen.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ali Mohsen" />
     <meta property="og:description" content="Software Developer" />
-    <meta property="og:image" content="/Assets/AM-logo-128.png" />
+    <meta property="og:image" content="/Assets/AM-logo-1024.png" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="128" />
-    <meta property="og:image:height" content="128" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
     <meta property="og:image:alt" content="Website logo" />
     <meta property="og:site_name" content="Ali Mohsen" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
-    <meta property="twitter:domain" content="alimohsen.dev" />
     <meta property="twitter:url" content="https://alimohsen.dev/" />
     <meta name="twitter:title" content="Ali Mohsen" />
     <meta name="twitter:description" content="Software Developer" />
-    <meta name="twitter:image" content="/Assets/AM-logo-128.png" />
+    <meta name="twitter:image" content="/Assets/AM-logo-1024.png" />
 
+    <meta name="theme-color" content="#264bc7" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <base href="/" />
     <link href="Output/app.css" rel="stylesheet" />
@@ -52,19 +54,18 @@
       </nav>
     </div>
 
-    <!-- Bottom arrow clickable area -->
-    <div
-      id="scroll-indicator"
-      class="py- absolute bottom-0 left-1/2 -translate-x-1/2 transform cursor-pointer from-transparent via-white/30 to-transparent px-[45vw] transition duration-300 hover:bg-gradient-to-r sm:px-[30vw]"
-      onclick="hideArrow()">
-      <!-- Bottom floating arrow -->
-      <div class="animate-floatUpDown pb-5">
-        <span class="mt-4 block h-6 w-6 -rotate-45 border-b-4 border-l-4 border-white"></span>
-      </div>
-    </div>
-
-    <!-- "1st page" content -->
     <div class="mx-auto h-screen pt-[5vh] text-center sm:w-[85%] sm:pt-[15vh]">
+      <!-- Bottom arrow clickable area -->
+      <div
+        id="scroll-indicator"
+        class="py- absolute bottom-0 left-1/2 -translate-x-1/2 transform cursor-pointer from-transparent via-white/30 to-transparent px-[45vw] transition duration-300 hover:bg-gradient-to-r sm:px-[30vw]"
+        onclick="hideArrow()">
+        <!-- Bottom floating arrow -->
+        <div class="animate-floatUpDown pb-5">
+          <span class="mt-4 block h-6 w-6 -rotate-45 border-b-4 border-l-4 border-white"></span>
+        </div>
+      </div>
+
       <h1 class="text-4xl">Hi</h1>
       <p class="mt-14 text-xl sm:text-2xl">I'm a software developer pursuing a master's degree in Computer Science.</p>
       <p class="mt-12 text-lg sm:mt-6 sm:text-xl">
@@ -77,7 +78,6 @@
       </p>
     </div>
 
-    <!-- "2nd page" content -->
     <div class="mx-auto max-w-screen-lg text-gray-100">
       <!--Technologies worked with-->
       <p class="mb-7 text-center text-2xl tracking-tight">Technologies I've worked with</p>
@@ -135,15 +135,32 @@
             class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
             Jan, 2023 —
           </time>
+
           <div class="mb-4 text-xl font-bold">Master's thesis</div>
           <p class="text-center text-slate-300">
             My thesis,
-            <span class="font-semibold italic">Integrated Reflexion Modelling and 3D Source Code Visualization</span>
-            , focuses on evaluating the usefulness of incorporating architectural aspects into 3D source code visualization. This was done by adding
-            functionality to the software tool
+            <span class="font-semibold italic">Integrated Reflexion Modelling and 3D Source Code Visualization,</span>
+            focuses on evaluating the usefulness of incorporating architectural aspects into 3D source code visualization. This was done by adding functionality
+            to the software tool
             <a href="https://softvis3d.com/" target="_blank" class="link inline-block">Softvis3D</a>
             then conducting a small-scale user study.
           </p>
+          <div class="navigation-wrapper">
+            <div id="masters-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
+              <img
+                alt=""
+                src="Assets/Masters/FerriesBetweenIslands.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="View of dependencies between houses"
+                src="Assets/Masters/ClassDependencies.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="A 'reflexion island' with its dependencies"
+                src="Assets/Masters/Island.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+            </div>
+          </div>
         </div>
 
         <div class="flex items-center justify-center">
@@ -179,6 +196,26 @@
             A university project where I worked in a team to build a prototype Corona Tracker application for Android. I was responsible for the UI/UX elements
             of the application.
           </p>
+          <div class="navigation-wrapper">
+            <div id="icorona-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
+              <img
+                alt="iCorona app login page"
+                src="Assets/icorona/LoginPage.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app update status"
+                src="Assets/icorona/UpdateStatus.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app global data page"
+                src="Assets/icorona/GlobalDataPage.png"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+              <img
+                alt="iCorona app update status"
+                src="Assets/icorona/StatusPage.jpg"
+                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+            </div>
+          </div>
         </div>
 
         <div class="flex items-center justify-center">
@@ -215,7 +252,103 @@
   </body>
 </html>
 
+<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
 <script>
+  new KeenSlider(
+    "#masters-slider",
+    {
+      loop: true,
+      slides: {
+        perView: 1,
+      },
+    },
+    [navigation],
+  );
+
+  new KeenSlider(
+    "#kep-slider",
+    {
+      loop: true,
+      breakpoints: {
+        "(min-width: 640px)": {
+          slides: { perView: 1 },
+        },
+      },
+      slides: { perView: 1 },
+    },
+    [navigation],
+  );
+
+  new KeenSlider(
+    "#icorona-slider",
+    {
+      loop: true,
+      breakpoints: {
+        "(min-width: 640px)": {
+          slides: { perView: 3 },
+        },
+      },
+      slides: { perView: 1 },
+    },
+    [navigation],
+  );
+
+  function navigation(slider) {
+    let wrapper, dots, arrowLeft, arrowRight;
+
+    function markup() {
+      wrapperMarkup();
+      dotMarkup();
+      arrowMarkup();
+    }
+
+    function createDiv(className) {
+      var div = document.createElement("div");
+      div.classList.add(...className.split(" "));
+      return div;
+    }
+
+    function arrowMarkup() {
+      arrowLeft = createDiv("arrow arrow--left");
+      arrowLeft.addEventListener("click", () => slider.prev());
+      arrowRight = createDiv("arrow arrow--right");
+      arrowRight.addEventListener("click", () => slider.next());
+
+      wrapper.appendChild(arrowLeft);
+      wrapper.appendChild(arrowRight);
+    }
+
+    function wrapperMarkup() {
+      wrapper = createDiv("navigation-wrapper");
+      slider.container.parentNode.appendChild(wrapper);
+      wrapper.appendChild(slider.container);
+    }
+
+    function dotMarkup() {
+      dots = createDiv("dots");
+      slider.track.details.slides.forEach((_e, idx) => {
+        var dot = createDiv("dot");
+        dot.addEventListener("click", () => slider.moveToIdx(idx));
+        dots.appendChild(dot);
+      });
+
+      wrapper.appendChild(dots);
+    }
+
+    function updateClasses() {
+      var slide = slider.track.details.rel;
+      Array.from(dots.children).forEach(function (dot, idx) {
+        idx === slide ? dot.classList.add("dot--active") : dot.classList.remove("dot--active");
+      });
+    }
+
+    slider.on("created", () => {
+      markup();
+      updateClasses();
+    });
+    slider.on("slideChanged", () => updateClasses());
+  }
+
   const scrollThreshold = (scrollPercentage) => (scrollPercentage / 100) * window.innerHeight;
 
   function hideArrow() {
@@ -311,5 +444,44 @@
 
   .animate-floatUpDown {
     animation: floatUpDown 1.15s infinite;
+  }
+
+  .navigation-wrapper {
+    position: relative;
+    margin-top: 2rem;
+  }
+  .dots {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .dot {
+    cursor: pointer;
+    border: none;
+    width: 10px;
+    height: 10px;
+    background: #6a8ca8;
+    border-radius: 50%;
+    margin: 0px 5px;
+    padding: 5px;
+  }
+  .dot--active {
+    background: #46b8ff;
+  }
+  .arrow {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 40%;
+  }
+  .arrow--left {
+    left: 5px;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
+  }
+  .arrow--right {
+    left: auto;
+    right: 5px;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z'%3E%3C/path%3E%3C/svg%3E");
   }
 </style>
