@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-
     <title>Ali Mohsen</title>
     <meta name="description" content="Software Developer" />
 
@@ -33,477 +32,537 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#174280" />
     <meta name="msapplication-TileColor" content="#174280" />
     <meta name="theme-color" content="#174280" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <base href="/" />
     <link href="/Output/app.css" rel="stylesheet" />
+
+    <style>
+      .icon {
+        width: 10em;
+        height: 10em;
+        fill: "#fff";
+        stroke: "#fff";
+      }
+    </style>
   </head>
 
-  <body class="bg-gradient-to-b from-[#013460] to-gray-800 px-3 pb-16 text-white">
+  <body class="selection:bg-primary-700 bg-[#0e131f] font-sans text-slate-100 selection:text-white">
     <!-- Header -->
-    <div class="mx-auto flex flex-wrap justify-between px-2 py-6 drop-shadow-md sm:max-w-screen-2xl lg:px-24">
-      <button onclick="changeBodyBackground()" class="text-xl font-semibold sm:text-2xl">Ali Mohsen</button>
-      <nav>
-        <div class="grid grid-cols-2 place-items-center gap-1 sm:gap-2">
-          <a href="https://github.com/Spoertm" target="_blank" class="flex flex-row items-center justify-center rounded p-2 hover:bg-white/15">
-            <img alt="GitHub logo" class="h-5 w-5 invert sm:mr-2" src="Assets/github-logo.svg" />
-            <span class="hidden sm:block">GitHub</span>
+    <header class="fixed top-0 z-50 w-full border-b border-slate-700/30 bg-[#0f172a]/60 py-3 backdrop-blur-sm transition-all duration-300">
+      <div class="container mx-auto flex items-center justify-between px-4 py-4">
+        <button class="group relative text-xl font-medium text-white">
+          Ali Mohsen
+          <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
+        </button>
+        <nav class="hidden items-center space-x-8 md:flex">
+          <a href="#about" class="group relative text-slate-300 transition-colors hover:text-white">
+            About
+            <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
           </a>
-
+          <a href="#background" class="group relative text-slate-300 transition-colors hover:text-white">
+            Background
+            <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a
+            href="https://github.com/Spoertm"
+            target="_blank"
+            class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
+            <svg class="h-6 w-6 fill-white">
+              <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
+            </svg>
+          </a>
           <a
             href="https://www.linkedin.com/in/ali-mohsen-ab7543237/"
             target="_blank"
-            class="flex flex-row items-center justify-center rounded p-2 hover:bg-white/15">
-            <img alt="LinkedIn logo" class="h-5 w-5 sm:mr-2" src="Assets/LinkedIn-logo.svg" />
-            <span class="hidden sm:block">LinkedIn</span>
+            class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
+            <svg class="h-6 w-6 fill-white">
+              <use xlink:href="Assets/icons-sprite.svg#linkedIn-logo"></use>
+            </svg>
           </a>
-        </div>
-      </nav>
-    </div>
+        </nav>
 
-    <div class="mx-auto h-screen pt-[5vh] text-center sm:w-[85%] sm:pt-[15vh]">
-      <!-- Bottom arrow clickable area -->
-      <div
-        id="scroll-indicator"
-        class="py- absolute bottom-0 left-1/2 -translate-x-1/2 transform cursor-pointer from-transparent via-white/30 to-transparent px-[45vw] transition duration-300 hover:bg-gradient-to-r sm:px-[30vw]"
-        onclick="hideArrow()">
-        <!-- Bottom floating arrow -->
-        <div class="animate-floatUpDown pb-5">
-          <span class="mt-4 block h-6 w-6 -rotate-45 border-b-4 border-l-4 border-white"></span>
+        <!-- Mobile menu button -->
+        <button class="p-2 text-slate-300 focus:outline-none md:hidden">
+          <svg id="menu-toggle" class="h-6 w-6 fill-white">
+            <use xlink:href="Assets/icons-sprite.svg#menu-icon"></use>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="glass hidden border-t border-slate-700/30 px-4 py-4 md:hidden">
+        <nav class="flex flex-col space-y-4">
+          <a href="#about" class="py-2 text-slate-300 transition-colors hover:text-white">About</a>
+          <a href="#background" class="py-2 text-slate-300 transition-colors hover:text-white">Background</a>
+          <div class="flex space-x-4 py-2">
+            <a
+              href="https://github.com/Spoertm"
+              target="_blank"
+              class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
+              <svg class="h-6 w-6 fill-white">
+                <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ali-mohsen-ab7543237/"
+              target="_blank"
+              class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
+              <svg class="h-6 w-6 fill-white">
+                <use xlink:href="Assets/icons-sprite.svg#linkedIn-logo"></use>
+              </svg>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="flex min-h-screen items-center md:pt-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl">
+          <h1 class="text-5xl font-bold leading-tight sm:text-5xl">
+            Hi, I'm
+            <span class="bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] bg-clip-text text-transparent">Ali</span>
+          </h1>
+          <p class="mt-6 max-w-2xl text-balance text-xl text-slate-300">I'm a Software engineer with a master's degree in Computer Science.</p>
+          <div class="my-4 flex h-14 items-center text-lg">
+            I work with
+            <code class="text-primary-400 ml-2" id="interestSpan"></code>
+          </div>
+          <div class="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+            <a
+              href="#background"
+              class="bg-primary-600 hover:bg-primary-700 transform select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg">
+              See my work
+            </a>
+          </div>
         </div>
       </div>
 
-      <h1 class="text-4xl">Hi</h1>
-      <p class="mt-14 text-xl sm:text-2xl">I'm a software developer pursuing a master's degree in Computer Science.</p>
-      <p class="mt-12 text-lg sm:mt-6 sm:text-xl">
-        I like
-        <code class="text-[#FFB400]" id="interestSpan"></code>
-      </p>
-      <p class="mt-20">
-        Feel free to check out my projects on
-        <a class="link" href="https://github.com/Spoertm" target="_blank">my GitHub page</a>
-      </p>
-    </div>
-
-    <div class="mx-auto max-w-screen-lg text-gray-100">
-      <!--Technologies worked with-->
-      <p class="mb-7 text-center text-2xl tracking-tight">Technologies I've worked with</p>
-      <div class="grid grid-flow-row items-stretch gap-4 sm:grid-flow-col" id="card-container">
-        <div class="group rounded border-2 border-sky-800 bg-white/5 p-4 transition duration-300 ease-in-out">
-          <div class="flex flex-row items-center justify-center gap-3">
-            <svg class="h-7 w-7 stroke-emerald-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            <p>Backend</p>
-          </div>
-          <p class="pt-5 text-center">.NET Core, ASP.NET Core, EF Core, and Spring.</p>
-        </div>
-        <div class="group rounded border-2 border-sky-800 bg-white/5 p-4 transition duration-300 ease-in-out">
-          <div class="flex flex-row items-center justify-center gap-3">
-            <svg
-              class="h-7 w-7 stroke-[#b878f8]"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-6 w-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-            </svg>
-            <p>Frontend</p>
-          </div>
-          <p class="pt-5 text-center">Blazor, WinForms, HTML, Javascript, CSS, TailwindCSS, and XML.</p>
-        </div>
-        <div class="group rounded border-2 border-sky-800 bg-white/5 p-4 transition duration-300 ease-in-out">
-          <div class="flex flex-row items-center justify-center gap-3">
-            <svg class="h-7 w-7 stroke-[#f76464]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <p>Programming languages</p>
-          </div>
-          <p class="pt-5 text-center">C#, Java, Python, Typescript, C, SQL, and PostgreSQL.</p>
-        </div>
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 flex -translate-x-1/2 transform animate-bounce flex-col items-center text-slate-400">
+        <span class="mb-2 select-none text-sm">Scroll</span>
+        <svg class="h-6 w-6">
+          <use xlink:href="Assets/icons-sprite.svg#down-arrow-icon"></use>
+        </svg>
       </div>
+    </section>
 
-      <hr class="my-16 h-px border-0 bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+    <!-- About Section -->
+    <section id="about" class="relative py-24">
+      <div class="container mx-auto px-4">
+        <h2 class="mb-16 flex items-center text-3xl font-bold">
+          <span class="bg-primary-500 mr-4 h-px w-10"></span>
+          About me
+        </h2>
 
-      <!-- Projects -->
-      <div class="mx-auto sm:max-w-3xl">
-        <div class="mb-12 text-center text-2xl tracking-tight text-white">Projects I've worked on</div>
-
-        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
-          <time
-            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
-            Jan, 2023 —
-          </time>
-
-          <div class="mb-4 text-xl font-bold">Master's thesis</div>
-          <p class="text-center text-slate-300">
-            My thesis,
-            <span class="font-semibold italic">Integrated Reflexion Modelling and 3D Source Code Visualization,</span>
-            focuses on evaluating the usefulness of incorporating architectural aspects into 3D source code visualization. This was done by adding functionality
-            to the software tool
-            <a href="https://softvis3d.com/" target="_blank" class="link inline-block">Softvis3D</a>
-            then conducting a small-scale user study.
+        <div class="max-w-3xl">
+          <p class="mb-6 text-lg leading-relaxed text-slate-300">
+            I'm a software engineer with a background in Computer Science. I enjoy solving problems with code and creating useful applications that people can
+            actually use. Recently, I've been exploring generative AI models in my projects.
           </p>
-          <div class="navigation-wrapper">
-            <div id="masters-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
-              <img
-                alt=""
-                src="Assets/Masters/FerriesBetweenIslands.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="View of dependencies between houses"
-                src="Assets/Masters/ClassDependencies.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="A 'reflexion island' with its dependencies"
-                src="Assets/Masters/Island.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="Apache Lucene's source code in 3D"
-                src="Assets/Masters/ApacheLucene.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+          <p class="mb-6 text-lg leading-relaxed text-slate-300">
+            I try to write clean code that's easy to understand and maintain. I'm curious about how larger systems work and like learning about prompt
+            engineering and integrating LLMs to build more intelligent software solutions.
+          </p>
+        </div>
+
+        <div class="mt-16 max-w-4xl">
+          <h3 class="mb-8 text-xl font-medium">Technologies I enjoy working with:</h3>
+          <div class="grid cursor-default grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#code-icon"></use>
+              </svg>
+              <span>.NET Ecosystem</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#database-icon"></use>
+              </svg>
+              <span>SQL & EF Core</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#server-icon"></use>
+              </svg>
+              <span>Generative AI</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#python-icon"></use>
+              </svg>
+              <span>Python</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#react-icon"></use>
+              </svg>
+              <span>React</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#cloud-icon"></use>
+              </svg>
+              <span>Cloud Services</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#git-branch-icon"></use>
+              </svg>
+              <span>Git</span>
+            </div>
+            <div
+              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
+              <svg class="mr-3 h-9 w-9">
+                <use xlink:href="Assets/icons-sprite.svg#sitemap-icon"></use>
+              </svg>
+              <span>Architecture</span>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="flex items-center justify-center">
-          <div class="h-20 border-l-2 border-blue-200/30"></div>
-        </div>
+    <!-- Background Section -->
+    <section id="background" class="relative py-24">
+      <div class="container mx-auto px-4">
+        <h2 class="mb-16 flex items-center text-3xl font-bold">
+          <span class="bg-primary-500 mr-4 h-px w-10"></span>
+          My background
+        </h2>
 
-        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
-          <time
-            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
-            Aug, 2022
-          </time>
-          <div class="mb-4 text-xl font-bold">Tourist application</div>
-          <p class="text-center text-slate-300">
-            A university project where I worked in a team to build an Android tourist application and a developer portal website. The application was built in
-            Java and the website with
-            <a class="link inline-block" target="_blank" href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">.NET Blazor</a>
-            WASM. I was responsible for most of the UI/UX elements in the developer portal and the Android application, and generally involved in most parts of
-            development.
-          </p>
-        </div>
+        <div class="relative ml-0 max-w-3xl md:ml-12">
+          <div class="absolute bottom-0 left-[15px] top-0 w-[1px] bg-[#4338ca] md:left-[23px]"></div>
 
-        <div class="flex items-center justify-center">
-          <div class="h-20 border-l-2 border-blue-200/30"></div>
-        </div>
+          <!-- Timeline Item 1 -->
+          <div class="relative mb-16 ml-10 md:ml-12">
+            <div
+              class="border-primary-600 shadow-primary-500/10 absolute left-[-24px] top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
+            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">2024 — Present</div>
+            <h3 class="mb-4 text-2xl font-semibold">Enterprise Software Consulting</h3>
+            <p class="mb-4 text-slate-300">
+              Working on building web applications using cloud technologies while exploring AI integration opportunities. Learning the ropes of professional
+              software development while contributing to real-world projects with both traditional and AI-enhanced solutions.
+            </p>
+            <ul class="list-outside list-disc space-y-1 pl-5 text-slate-400">
+              <li>Developing features for web applications using C# and ASP.NET</li>
+              <li>Implementing cloud services and microservice architectures</li>
+              <li>Building responsive frontend interfaces with modern frameworks</li>
+              <li>Designing and optimizing database schemas and queries</li>
+              <li>
+                Integrating AI technologies (generative models, agentic systems, and RAG solutions) for content creation, process automation, and knowledge
+                management
+              </li>
+              <li>Collaborating with cross-functional teams on both traditional and AI-enabled projects</li>
+            </ul>
+          </div>
 
-        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
-          <time
-            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
-            Aug, 2020
-          </time>
-          <div class="mb-4 text-xl font-bold">Corona Tracker</div>
-          <p class="text-center text-slate-300">
-            A university project where I worked in a team to build a prototype Corona Tracker application for Android. I was responsible for the UI/UX elements
-            of the application.
-          </p>
-          <div class="navigation-wrapper">
-            <div id="icorona-slider" class="relative flex max-h-80 touch-pan-y select-none items-center overflow-hidden rounded-md" data-keen-slider-reverse>
-              <img
-                alt="iCorona app login page"
-                src="Assets/icorona/Loginpage.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="iCorona app update status"
-                src="Assets/icorona/UpdateStatus.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="iCorona app global data page"
-                src="Assets/icorona/GlobalDataPage.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
-              <img
-                alt="iCorona app update status"
-                src="Assets/icorona/StatusPage.webp"
-                class="keen-slider__slide relative flex max-h-[inherit] items-center justify-center object-contain text-5xl font-semibold" />
+          <!-- Timeline Item 2 -->
+          <div class="relative mb-16 ml-10 md:ml-12">
+            <div
+              class="border-primary-600 shadow-primary-500/10 absolute left-[-24px] top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
+            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">2023 — 2024</div>
+            <h3 class="mb-4 text-2xl font-semibold">Master's thesis</h3>
+            <p class="mb-6 text-slate-300">
+              My thesis,
+              <em>Integrated Reflexion Modelling and 3D Source Code Visualization,</em>
+              evaluated the usefulness of incorporating architectural aspects into 3D source code visualization.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  onclick="showModal('mastersmodal1')"
+                  src="Assets/Masters/FerriesBetweenIslands.webp"
+                  alt="Visualization"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105 hover:overflow-visible" />
+              </div>
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  onclick="showModal('mastersmodal2')"
+                  src="Assets/Masters/ClassDependencies.webp"
+                  alt="Visualization"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="mastersmodal1"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md"
+            onclick="hideModal('mastersmodal1')">
+            <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
+              <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Global Data Page" class="max-h-[75vh] object-contain" />
+              <div class="mt-3 flex justify-end">
+                <button
+                  onclick="hideModal('mastersmodal1')"
+                  class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="mastersmodal2"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md"
+            onclick="hideModal('mastersmodal2')">
+            <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
+              <img src="Assets/Masters/ClassDependencies.webp" alt="Login Page" class="max-h-[75vh] object-contain" />
+              <div class="mt-3 flex justify-end">
+                <button
+                  onclick="hideModal('mastersmodal2')"
+                  class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 3 -->
+          <div class="relative mb-16 ml-10 md:ml-12">
+            <div
+              class="border-primary-600 shadow-primary-500/10 absolute left-[-24px] top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
+            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Aug, 2022 — Jan, 2023</div>
+            <h3 class="mb-4 text-2xl font-semibold">Tourist Application</h3>
+            <p class="mb-6 text-slate-300">
+              Led UI/UX development for an Android tourist application and developer portal website, built with Java and .NET Blazor WASM. I was responsible for
+              most of the UI/UX elements in the developer portal and the Android application.
+            </p>
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+              <!-- Screenshot 1 -->
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  src="Assets/icorona/GlobalDataPage.webp"
+                  alt="Global Data Page"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
+                  onclick="showModal('modal1')" />
+              </div>
+
+              <!-- Screenshot 2 -->
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  src="Assets/icorona/Loginpage.webp"
+                  alt="Login Page"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
+                  onclick="showModal('modal2')" />
+              </div>
+
+              <!-- Screenshot 3 -->
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  src="Assets/icorona/StatusPage.webp"
+                  alt="Status Page"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
+                  onclick="showModal('modal3')" />
+              </div>
+
+              <!-- Screenshot 4 -->
+              <div class="cursor-pointer overflow-hidden rounded-lg">
+                <img
+                  src="Assets/icorona/UpdateStatus.webp"
+                  alt="Update Status"
+                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
+                  onclick="showModal('modal4')" />
+              </div>
+            </div>
+
+            <!-- Modals for full-size viewing -->
+            <div id="modal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal1')">
+              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+                <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="max-h-[75vh] object-contain" />
+                <div class="mt-3 flex w-full justify-end">
+                  <button
+                    onclick="hideModal('modal1')"
+                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="modal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal2')">
+              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+                <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="max-h-[75vh] object-contain" />
+                <div class="mt-3 flex w-full justify-end">
+                  <button
+                    onclick="hideModal('modal2')"
+                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="modal3" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal3')">
+              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+                <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="max-h-[75vh] object-contain" />
+                <div class="mt-3 flex w-full justify-end">
+                  <button
+                    onclick="hideModal('modal3')"
+                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="modal4" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal4')">
+              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+                <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="max-h-[75vh] object-contain" />
+                <div class="mt-3 flex w-full justify-end">
+                  <button
+                    onclick="hideModal('modal4')"
+                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 4 -->
+          <div class="relative ml-10 md:ml-12">
+            <div
+              class="border-primary-600 shadow-primary-500/10 absolute left-[-24px] top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
+            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Jan, 2020 —</div>
+            <h3 class="mb-4 text-2xl font-semibold">Open Source & Personal Projects</h3>
+            <p class="mb-4 text-slate-300">Developing personal projects that have deepened my expertise with the .NET platform.</p>
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <a
+                href="https://github.com/Spoertm/Clubber"
+                target="_blank"
+                class="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 transition-colors hover:bg-slate-700">
+                <svg class="h-5 w-5 fill-white">
+                  <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
+                </svg>
+                <span>Clubber</span>
+              </a>
+              <a
+                href="https://github.com/Spoertm/Swarmer"
+                target="_blank"
+                class="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 transition-colors hover:bg-slate-700">
+                <svg class="h-5 w-5 fill-white">
+                  <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
+                </svg>
+                <span>Swarmer</span>
+              </a>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="flex items-center justify-center">
-          <div class="h-20 border-l-2 border-blue-200/30"></div>
-        </div>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/50 py-4">
+      <div class="container mx-auto px-4 text-center md:text-left">
+        <div class="flex flex-col items-center justify-between md:flex-row">
+          <div class="mb-6 md:mb-0">
+            <div class="font-semibold">Ali Mohsen</div>
+            <div class="text-sm text-slate-400">Software Engineer & Consultant</div>
+          </div>
 
-        <div class="relative rounded-lg border-2 border-blue-200/30 p-6 pt-8 text-center sm:p-8">
-          <time
-            class="absolute -top-[0.95rem] left-1/2 inline-flex -translate-x-1/2 transform items-center justify-center rounded-full border-2 border-blue-200/30 bg-blue-700 px-3 py-1 text-xs font-bold uppercase">
-            Jan, 2020 —
-          </time>
-          <div class="mb-4 text-xl font-bold">Personal projects</div>
-          <p class="text-center text-slate-300">
-            <a class="link inline-flex items-center" target="_blank" href="https://github.com/Spoertm/Clubber">
-              <img alt="GitHub logo" class="absolute h-4 w-4 invert" src="Assets/github-logo.svg" />
-              <span class="ml-5">Clubber</span>
-            </a>
-            and
-            <a class="link inline-flex items-center" target="_blank" href="https://github.com/Spoertm/Swarmer">
-              <img alt="GitHub logo" class="absolute h-4 w-4 invert" src="Assets/github-logo.svg" />
-              <span class="ml-5">Swarmer</span>
-            </a>
-            are two projects I've worked on in my spare time which got me into the .NET platform. Throughout the years, I've incorporated a few architectural
-            and design patterns into the projects, such as
-            <span class="italic">Clean Architecture,</span>
-            <span class="italic">Dependency Injection,</span>
-            <span class="italic">Repository Pattern,</span>
-            and
-            <span class="italic">unit testing.</span>
-          </p>
+          <div class="mb-6 text-sm text-slate-400 md:mb-0 md:text-left">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved
+          </div>
         </div>
       </div>
-    </div>
+    </footer>
+
+    <script>
+      async function typeWriteInterests() {
+        const interests = [".NET", "Software Architecture", "UI/UX Design", "Generative AI", "Cloud Services", "Open Source"];
+        const interestSpan = document.getElementById("interestSpan");
+
+        while (true) {
+          for (var currentInterest of interests) {
+            for (var i = interestSpan.innerHTML.length; i > 0; i--) {
+              interestSpan.innerHTML = interestSpan.innerHTML.slice(0, -1);
+              await sleep(12);
+            }
+
+            for (var letter of currentInterest) {
+              interestSpan.innerHTML += letter;
+              await sleep(40);
+            }
+
+            await sleep(1300);
+          }
+        }
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      // Start the typewriter effect
+      typeWriteInterests();
+
+      function showModal(modalId) {
+        document.getElementById(modalId).classList.remove("hidden");
+        document.getElementById(modalId).classList.add("flex");
+
+        // Add event listener for Escape key
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") {
+            hideModal(modalId);
+          }
+        });
+      }
+
+      function hideModal(modalId) {
+        document.getElementById(modalId).classList.add("hidden");
+        document.getElementById(modalId).classList.remove("flex");
+
+        // Remove event listener when modal is closed
+        document.removeEventListener("keydown", function (event) {
+          if (event.key === "Escape") {
+            hideModal(modalId);
+          }
+        });
+      }
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+
+        // Get the use element inside the SVG
+        const useElement = menuToggle.querySelector("use");
+
+        // Change the xlink:href attribute based on menu state
+        if (mobileMenu.classList.contains("hidden")) {
+          useElement.setAttribute("xlink:href", "Assets/icons-sprite.svg#menu-icon");
+        } else {
+          useElement.setAttribute("xlink:href", "Assets/icons-sprite.svg#close-icon");
+        }
+      });
+
+      // Header scroll effect
+      const header = document.querySelector("header");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          header.classList.add("shadow-lg");
+          header.classList.remove("py-3");
+        } else {
+          header.classList.remove("shadow-lg");
+          header.classList.add("py-3");
+        }
+      });
+    </script>
   </body>
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
-<script>
-  new KeenSlider(
-    "#masters-slider",
-    {
-      loop: true,
-      slides: {
-        perView: 1,
-      },
-    },
-    [navigation],
-  );
-
-  new KeenSlider(
-    "#kep-slider",
-    {
-      loop: true,
-      breakpoints: {
-        "(min-width: 640px)": {
-          slides: { perView: 1 },
-        },
-      },
-      slides: { perView: 1 },
-    },
-    [navigation],
-  );
-
-  new KeenSlider(
-    "#icorona-slider",
-    {
-      loop: true,
-      breakpoints: {
-        "(min-width: 640px)": {
-          slides: { perView: 3 },
-        },
-      },
-      slides: { perView: 1 },
-    },
-    [navigation],
-  );
-
-  function navigation(slider) {
-    let wrapper, dots, arrowLeft, arrowRight;
-
-    function markup() {
-      wrapperMarkup();
-      dotMarkup();
-      arrowMarkup();
-    }
-
-    function createDiv(className) {
-      var div = document.createElement("div");
-      div.classList.add(...className.split(" "));
-      return div;
-    }
-
-    function arrowMarkup() {
-      arrowLeft = createDiv("arrow arrow--left");
-      arrowLeft.addEventListener("click", () => slider.prev());
-      arrowRight = createDiv("arrow arrow--right");
-      arrowRight.addEventListener("click", () => slider.next());
-
-      wrapper.appendChild(arrowLeft);
-      wrapper.appendChild(arrowRight);
-    }
-
-    function wrapperMarkup() {
-      wrapper = createDiv("navigation-wrapper");
-      slider.container.parentNode.appendChild(wrapper);
-      wrapper.appendChild(slider.container);
-    }
-
-    function dotMarkup() {
-      dots = createDiv("dots");
-      slider.track.details.slides.forEach((_e, idx) => {
-        var dot = createDiv("dot");
-        dot.addEventListener("click", () => slider.moveToIdx(idx));
-        dots.appendChild(dot);
-      });
-
-      wrapper.appendChild(dots);
-    }
-
-    function updateClasses() {
-      var slide = slider.track.details.rel;
-      Array.from(dots.children).forEach(function (dot, idx) {
-        idx === slide ? dot.classList.add("dot--active") : dot.classList.remove("dot--active");
-      });
-    }
-
-    slider.on("created", () => {
-      markup();
-      updateClasses();
-    });
-    slider.on("slideChanged", () => updateClasses());
-  }
-
-  const scrollThreshold = (scrollPercentage) => (scrollPercentage / 100) * window.innerHeight;
-
-  function hideArrow() {
-    const scrollIndicator = document.getElementById("scroll-indicator");
-    scrollIndicator.style.opacity = "0";
-  }
-
-  function showArrow() {
-    const scrollIndicator = document.getElementById("scroll-indicator");
-    scrollIndicator.style.opacity = "100";
-  }
-
-  // Scroll down on click
-  document.getElementById("scroll-indicator").addEventListener("click", () => {
-    window.scrollBy({
-      top: window.innerHeight,
-      behavior: "smooth",
-    });
-
-    hideArrow();
-  });
-
-  // Show arrow when scrolled back to top
-  window.addEventListener("scroll", () => {
-    if (window.scrollY <= scrollThreshold(20)) {
-      const scrollIndicator = document.getElementById("scroll-indicator");
-      showArrow();
-    }
-
-    if (window.scrollY >= scrollThreshold(20)) {
-      const scrollIndicator = document.getElementById("scroll-indicator");
-      hideArrow();
-    }
-  });
-
-  async function typeWriteInterests() {
-    const interests = [".NET", "Software Architecture", "UI/UX Design", "Software Development"];
-    const interestSpan = document.getElementById("interestSpan");
-
-    while (true) {
-      for (var currentInterest of interests) {
-        for (var i = interestSpan.innerHTML.length; i > 0; i--) {
-          interestSpan.innerHTML = interestSpan.innerHTML.slice(0, -1);
-          await sleep(12);
-        }
-
-        for (var letter of currentInterest) {
-          interestSpan.innerHTML += letter;
-          await sleep(40);
-        }
-
-        await sleep(1300);
-      }
-    }
-  }
-
-  typeWriteInterests();
-
-  const cards = document.getElementById("card-container").children;
-  for (const card of cards) {
-    card.addEventListener("mouseenter", () => {
-      for (const otherCard of cards) {
-        if (otherCard !== card) {
-          otherCard.style.opacity = "0.2";
-        }
-      }
-    });
-
-    card.addEventListener("mouseleave", () => {
-      for (const otherCard of cards) {
-        if (otherCard !== card) {
-          otherCard.style.opacity = "1";
-        }
-      }
-    });
-  }
-
-  function changeBodyBackground() {
-    // Generate starting color
-    const hue = Math.random() * 360;
-    // 77 and 22 reflect the starting saturation and lightness of body background
-    const saturation = "77%";
-    const lightness = "22%";
-    const fromColor = `hsl(${hue}, ${saturation}, ${lightness})`;
-
-    document.body.style.background = `linear-gradient(to bottom, ${fromColor}, #1f2937)`;
-  }
-
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-</script>
-
-<style>
-  @keyframes floatUpDown {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-15px);
-    }
-  }
-
-  .animate-floatUpDown {
-    animation: floatUpDown 1.15s infinite;
-  }
-
-  .navigation-wrapper {
-    position: relative;
-    margin-top: 2rem;
-  }
-  .dots {
-    display: flex;
-    margin-top: 20px;
-    justify-content: center;
-  }
-  .dot {
-    cursor: pointer;
-    border: none;
-    width: 10px;
-    height: 10px;
-    background: #6a8ca8;
-    border-radius: 50%;
-    margin: 0px 5px;
-    padding: 5px;
-  }
-  .dot--active {
-    background: #46b8ff;
-  }
-  .arrow {
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 40%;
-  }
-  .arrow--left {
-    left: 5px;
-    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
-  }
-  .arrow--right {
-    left: auto;
-    right: 5px;
-    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' %3E%3Cpath d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z'%3E%3C/path%3E%3C/svg%3E");
-  }
-</style>
