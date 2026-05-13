@@ -131,6 +131,114 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 30px rgba(30, 42, 36, 0.08);
       }
+
+      .fan-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        height: 140px;
+        cursor: pointer;
+      }
+      .fan-item {
+        width: 140px;
+        height: 100px;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(30, 42, 36, 0.18);
+        border: 2px solid white;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        margin-left: -40px;
+        position: relative;
+      }
+      .fan-item:first-child { margin-left: 0; }
+      .fan-item img { width: 100%; height: 100%; object-fit: cover; }
+      .fan-container:hover .fan-item {
+        margin-left: 6px;
+        transform: rotate(0deg) !important;
+      }
+      .fan-container:hover .fan-item:first-child { margin-left: 0; }
+
+      .lightbox-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 21, 18, 0.88);
+        backdrop-filter: blur(12px);
+      }
+      .lightbox-overlay.active { display: flex; }
+      .lightbox-controls {
+        position: absolute;
+        bottom: 24px;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: nowrap;
+        padding: 0 16px;
+      }
+      .lightbox-btn {
+        background: rgba(30, 42, 36, 0.75);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        flex-shrink: 0;
+      }
+      .lightbox-btn:hover { background: rgba(30, 42, 36, 0.9); }
+      .lightbox-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 10;
+        background: rgba(30, 42, 36, 0.75);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      }
+      .lightbox-close:hover { background: rgba(30, 42, 36, 0.9); }
+      .lightbox-img {
+        max-height: 75vh;
+        max-width: 85vw;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        will-change: transform, opacity;
+      }
+      .lightbox-img.dragging {
+        transition: none !important;
+      }
+      .lightbox-caption {
+        color: rgba(255,255,255,0.85);
+        font-size: 14px;
+        text-align: center;
+        pointer-events: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60vw;
+      }
     </style>
   </head>
 
@@ -259,13 +367,11 @@
               <p class="text-mist-500 mt-3 leading-relaxed">
                 My thesis, <em>Integrated Reflexion Modelling and 3D Source Code Visualization,</em> evaluated the usefulness of incorporating architectural aspects into 3D source code visualization.
               </p>
-              <div class="mt-4 grid grid-cols-2 gap-3">
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('mastersmodal1')">
-                  <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Visualization" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('mastersmodal2')">
-                  <img src="Assets/Masters/ClassDependencies.webp" alt="Visualization" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
+              <div class="mt-4 fan-container" onclick="openLightbox('masters', 0)">
+                <div class="fan-item" style="transform: rotate(-5deg); z-index: 4;"><img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Ferries Between Islands" /></div>
+                <div class="fan-item" style="transform: rotate(-2deg); z-index: 3;"><img src="Assets/Masters/ClassDependencies.webp" alt="Class Dependencies" /></div>
+                <div class="fan-item" style="transform: rotate(1deg); z-index: 2;"><img src="Assets/Masters/ApacheLucene.webp" alt="Apache Lucene" /></div>
+                <div class="fan-item" style="transform: rotate(4deg); z-index: 1;"><img src="Assets/Masters/Island.webp" alt="Island" /></div>
               </div>
             </div>
           </div>
@@ -293,19 +399,11 @@
               <p class="text-mist-500 mt-3 leading-relaxed">
                 Led UI/UX development for an Android tourist application and developer portal website, built with Java and .NET Blazor WASM. I was responsible for most of the UI/UX elements in the developer portal and the Android application.
               </p>
-              <div class="mt-4 grid grid-cols-2 gap-3">
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal1')">
-                  <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal2')">
-                  <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal3')">
-                  <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
-                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal4')">
-                  <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
-                </div>
+              <div class="mt-4 fan-container" onclick="openLightbox('icorona', 0)">
+                <div class="fan-item" style="transform: rotate(-5deg); z-index: 4;"><img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" /></div>
+                <div class="fan-item" style="transform: rotate(-2deg); z-index: 3;"><img src="Assets/icorona/Loginpage.webp" alt="Login Page" /></div>
+                <div class="fan-item" style="transform: rotate(1deg); z-index: 2;"><img src="Assets/icorona/StatusPage.webp" alt="Status Page" /></div>
+                <div class="fan-item" style="transform: rotate(4deg); z-index: 1;"><img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" /></div>
               </div>
             </div>
           </div>
@@ -415,68 +513,23 @@
 
     </main>
 
-    <!-- Modals -->
-    <div id="mastersmodal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('mastersmodal1')">
-      <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Global Data Page" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex justify-end">
-          <button onclick="hideModal('mastersmodal1')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox-overlay" onclick="closeLightbox()">
+      <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox();" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="flex flex-col items-center" onclick="event.stopPropagation()">
+        <img id="lightboxImg" src="" alt="" class="lightbox-img" />
+        <div class="lightbox-controls">
+          <button class="lightbox-btn prev" id="lightboxPrev" onclick="event.stopPropagation(); prevImage();" aria-label="Previous">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="mastersmodal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('mastersmodal2')">
-      <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/Masters/ClassDependencies.webp" alt="Login Page" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex justify-end">
-          <button onclick="hideModal('mastersmodal2')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="modal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal1')">
-      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex w-full justify-end">
-          <button onclick="hideModal('modal1')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="modal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal2')">
-      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex w-full justify-end">
-          <button onclick="hideModal('modal2')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="modal3" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal3')">
-      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex w-full justify-end">
-          <button onclick="hideModal('modal3')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="modal4" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal4')">
-      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-        <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="max-h-[75vh] object-contain rounded-lg" />
-        <div class="mt-3 flex w-full justify-end">
-          <button onclick="hideModal('modal4')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-            Close
+          <div class="lightbox-caption">
+            <span id="lightboxCounter"></span>
+            <span id="lightboxTitle" style="margin-left: 8px; opacity: 0.7;"></span>
+          </div>
+          <button class="lightbox-btn next" id="lightboxNext" onclick="event.stopPropagation(); nextImage();" aria-label="Next">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         </div>
       </div>
@@ -505,31 +558,135 @@
 
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-      // Modals
-      const modalEscHandlers = {};
+      // Lightbox
+      const galleries = {
+        masters: [
+          { src: 'Assets/Masters/FerriesBetweenIslands.webp', alt: 'Ferries Between Islands' },
+          { src: 'Assets/Masters/ClassDependencies.webp', alt: 'Class Dependencies' },
+          { src: 'Assets/Masters/ApacheLucene.webp', alt: 'Apache Lucene' },
+          { src: 'Assets/Masters/Island.webp', alt: 'Island' },
+        ],
+        icorona: [
+          { src: 'Assets/icorona/GlobalDataPage.webp', alt: 'Global Data Page' },
+          { src: 'Assets/icorona/Loginpage.webp', alt: 'Login Page' },
+          { src: 'Assets/icorona/StatusPage.webp', alt: 'Status Page' },
+          { src: 'Assets/icorona/UpdateStatus.webp', alt: 'Update Status' },
+        ],
+      };
 
-      function showModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        const handler = function (event) {
-          if (event.key === 'Escape') {
-            hideModal(modalId);
-          }
+      let currentGallery = null;
+      let currentIndex = 0;
+      let lightboxKeyHandler = null;
+
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+      const lightboxTitle = document.getElementById('lightboxTitle');
+
+      function openLightbox(galleryName, index) {
+        currentGallery = galleryName;
+        currentIndex = index;
+        showImage(currentIndex);
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        lightboxKeyHandler = function (e) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') prevImage();
+          if (e.key === 'ArrowRight') nextImage();
         };
-        modalEscHandlers[modalId] = handler;
-        document.addEventListener('keydown', handler);
+        document.addEventListener('keydown', lightboxKeyHandler);
       }
 
-      function hideModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        if (modalEscHandlers[modalId]) {
-          document.removeEventListener('keydown', modalEscHandlers[modalId]);
-          delete modalEscHandlers[modalId];
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        if (lightboxKeyHandler) {
+          document.removeEventListener('keydown', lightboxKeyHandler);
+          lightboxKeyHandler = null;
         }
+        currentGallery = null;
       }
+
+      function showImage(index) {
+        const images = galleries[currentGallery];
+        const img = images[index];
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxCounter.textContent = (index + 1) + ' / ' + images.length;
+        lightboxTitle.textContent = img.alt;
+        lightboxPrev.style.opacity = '1';
+        lightboxNext.style.opacity = '1';
+      }
+
+      function prevImage() {
+        const images = galleries[currentGallery];
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      }
+
+      function nextImage() {
+        const images = galleries[currentGallery];
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      }
+
+      // Touch drag / swipe
+      let dragStartX = null;
+      let dragCurrentDelta = 0;
+      const DRAG_RESISTANCE = 0.65;
+      const SWIPE_THRESHOLD = 40;
+
+      lightbox.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) return;
+        if (e.target.closest('.lightbox-btn, .lightbox-close')) return;
+        dragStartX = e.touches[0].clientX;
+        dragCurrentDelta = 0;
+        lightboxImg.classList.add('dragging');
+      }, { passive: true });
+
+      lightbox.addEventListener('touchmove', (e) => {
+        if (dragStartX === null) return;
+        dragCurrentDelta = (e.touches[0].clientX - dragStartX) * DRAG_RESISTANCE;
+        lightboxImg.style.transform = `translateX(${dragCurrentDelta}px)`;
+        const opacity = Math.max(0.5, 1 - Math.abs(dragCurrentDelta) / 400);
+        lightboxImg.style.opacity = opacity;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', () => {
+        if (dragStartX === null) return;
+        lightboxImg.classList.remove('dragging');
+        lightboxImg.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+
+        if (Math.abs(dragCurrentDelta) > SWIPE_THRESHOLD) {
+          const direction = dragCurrentDelta > 0 ? 1 : -1;
+          lightboxImg.style.transform = `translateX(${direction * 100}vw)`;
+          lightboxImg.style.opacity = '0';
+
+          setTimeout(() => {
+            if (direction < 0) nextImage(); else prevImage();
+
+            lightboxImg.style.transition = 'none';
+            lightboxImg.style.transform = `translateX(${-direction * 100}vw)`;
+            lightboxImg.style.opacity = '0';
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                lightboxImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                lightboxImg.style.transform = 'translateX(0)';
+                lightboxImg.style.opacity = '1';
+              });
+            });
+          }, 250);
+        } else {
+          lightboxImg.style.transform = 'translateX(0)';
+          lightboxImg.style.opacity = '1';
+        }
+
+        dragStartX = null;
+      }, { passive: true });
 
       // Mobile menu
       const menuToggle = document.getElementById('menu-toggle');
