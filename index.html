@@ -31,537 +31,532 @@
     <meta name="theme-color" content="#174280" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <base href="/" />
-    <link href="/Output/app.css" rel="stylesheet" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              playfair: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              mist: {
+                50: '#f7f9f8',
+                100: '#eef2f0',
+                200: '#d4e4dc',
+                300: '#c5d4cc',
+                400: '#8aa898',
+                500: '#5a6a62',
+                600: '#3d4a44',
+                700: '#1e2a24',
+                800: '#161f1b',
+                900: '#0f1512',
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html { scroll-behavior: smooth; }
+
+      .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 0;
+        animation: blobDrift 20s ease-in-out infinite;
+      }
+      @keyframes blobDrift {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -20px) scale(1.1); }
+        66% { transform: translate(-20px, 15px) scale(0.95); }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.3s; }
+
+      .timeline-line {
+        position: absolute;
+        left: 7px;
+        top: 24px;
+        bottom: -32px;
+        width: 1px;
+        background: #c5d4cc;
+      }
+      .timeline-item:last-child .timeline-line { display: none; }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: #1e2a24;
+        z-index: 100;
+        width: 0%;
+        transition: width 0.1s linear;
+      }
+
+      .nav-glass {
+        background: rgba(238, 242, 240, 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(30, 42, 36, 0.08);
+      }
+    </style>
   </head>
 
-  <body class="selection:bg-primary-700 bg-[#0e131f] font-sans text-slate-100 selection:text-white">
-    <!-- Header -->
-    <header class="fixed top-0 z-50 w-full border-b border-slate-700/30 bg-[#0f172a]/60 py-3 backdrop-blur-sm transition-all duration-300">
-      <div class="container mx-auto flex items-center justify-between px-4 py-4">
-        <button class="group relative text-xl font-medium text-white">
-          Ali Mohsen
-          <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
-        </button>
-        <nav class="hidden items-center space-x-8 md:flex">
-          <a href="#about" class="group relative text-slate-300 transition-colors hover:text-white">
-            About
-            <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="#background" class="group relative text-slate-300 transition-colors hover:text-white">
-            Background
-            <span class="bg-primary-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="https://github.com/Spoertm"
-            target="_blank"
-            class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
-            <svg class="h-6 w-6 fill-white">
-              <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
-            </svg>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/ali-mohsen-ab7543237/"
-            target="_blank"
-            class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
-            <svg class="h-6 w-6 fill-white">
-              <use xlink:href="Assets/icons-sprite.svg#linkedIn-logo"></use>
-            </svg>
-          </a>
-        </nav>
+  <body class="bg-mist-100 text-mist-700 font-sans antialiased">
 
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Background blobs -->
+    <div class="blob w-96 h-96 bg-mist-200 -top-20 -right-20" style="animation-delay: 0s;"></div>
+    <div class="blob w-80 h-80 bg-[#d8dce8] top-1/3 -left-20" style="animation-delay: -7s;"></div>
+    <div class="blob w-72 h-72 bg-mist-200 bottom-20 right-10" style="animation-delay: -14s;"></div>
+
+    <!-- Nav -->
+    <nav class="nav-glass fixed top-0 w-full z-50 border-b border-mist-300/40">
+      <div class="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#" class="font-playfair text-lg font-semibold text-mist-700">Ali Mohsen</a>
+        <div class="hidden md:flex gap-6 text-sm text-mist-500">
+          <a href="#about" class="hover:text-mist-700 transition-colors">About</a>
+          <a href="#work" class="hover:text-mist-700 transition-colors">Work</a>
+          <a href="#stack" class="hover:text-mist-700 transition-colors">Stack</a>
+          <a href="#contact" class="hover:text-mist-700 transition-colors">Contact</a>
+        </div>
         <!-- Mobile menu button -->
-        <button class="p-2 text-slate-300 focus:outline-none md:hidden">
-          <svg id="menu-toggle" class="h-6 w-6 fill-white">
+        <button id="menu-toggle" class="p-2 text-mist-700 focus:outline-none md:hidden">
+          <svg class="h-6 w-6 fill-current">
             <use xlink:href="Assets/icons-sprite.svg#menu-icon"></use>
           </svg>
         </button>
       </div>
-
       <!-- Mobile menu -->
-      <div id="mobile-menu" class="glass hidden border-t border-slate-700/30 px-4 py-4 md:hidden">
-        <nav class="flex flex-col space-y-4">
-          <a href="#about" class="py-2 text-slate-300 transition-colors hover:text-white">About</a>
-          <a href="#background" class="py-2 text-slate-300 transition-colors hover:text-white">Background</a>
-          <div class="flex space-x-4 py-2">
-            <a
-              href="https://github.com/Spoertm"
-              target="_blank"
-              class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
-              <svg class="h-6 w-6 fill-white">
-                <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
-              </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ali-mohsen-ab7543237/"
-              target="_blank"
-              class="flex transform items-center text-slate-400 transition-all duration-150 hover:scale-[120%] hover:text-white">
-              <svg class="h-6 w-6 fill-white">
-                <use xlink:href="Assets/icons-sprite.svg#linkedIn-logo"></use>
-              </svg>
-            </a>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="flex min-h-screen items-center md:pt-20">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl">
-          <h1 class="text-5xl font-bold leading-tight sm:text-5xl">
-            Hi, I'm
-            <span class="bg-linear-to-r from-primary-600 to-[#8b5cf6] bg-clip-text text-transparent">Ali</span>
-          </h1>
-          <p class="mt-6 max-w-2xl text-balance text-xl text-slate-300">I'm a Software engineer with a master's degree in Computer Science.</p>
-          <div class="my-4 flex h-14 items-center text-lg">
-            I work with
-            <code class="text-primary-400 ml-2" id="interestSpan"></code>
-          </div>
-          <div class="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-            <a
-              href="#background"
-              class="bg-primary-600 hover:bg-primary-700 transform select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-              See my work
-            </a>
-          </div>
+      <div id="mobile-menu" class="hidden md:hidden border-t border-mist-300/40 px-6 py-4 bg-mist-100/95 backdrop-blur">
+        <div class="flex flex-col gap-4 text-sm text-mist-500">
+          <a href="#about" class="hover:text-mist-700 transition-colors">About</a>
+          <a href="#work" class="hover:text-mist-700 transition-colors">Work</a>
+          <a href="#stack" class="hover:text-mist-700 transition-colors">Stack</a>
+          <a href="#contact" class="hover:text-mist-700 transition-colors">Contact</a>
         </div>
       </div>
+    </nav>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-10 left-1/2 flex -translate-x-1/2 transform animate-bounce flex-col items-center text-slate-400">
-        <span class="mb-2 select-none text-sm">Scroll</span>
-        <svg class="h-6 w-6">
-          <use xlink:href="Assets/icons-sprite.svg#down-arrow-icon"></use>
-        </svg>
-      </div>
-    </section>
+    <!-- Main content -->
+    <main class="relative z-10 max-w-2xl mx-auto px-6 pt-32">
 
-    <!-- About Section -->
-    <section id="about" class="relative py-24">
-      <div class="container mx-auto px-4">
-        <h2 class="mb-16 flex items-center text-3xl font-bold">
-          <span class="bg-primary-500 mr-4 h-px w-10"></span>
-          About me
-        </h2>
+      <!-- HERO -->
+      <section class="text-center mb-32 reveal">
+        <p class="text-xs uppercase tracking-[0.25em] text-mist-400 mb-6">Portfolio — <span id="hero-year">2025</span></p>
+        <h1 class="font-playfair text-5xl md:text-6xl font-semibold text-mist-700 leading-[1.1]">
+          Hi, I'm Ali
+        </h1>
+        <p class="mt-6 text-lg text-mist-500 leading-relaxed max-w-md mx-auto">
+          I build software that solves real problems — from government systems to AI chatbots.
+        </p>
+      </section>
 
-        <div class="max-w-3xl">
-          <p class="mb-6 text-lg leading-relaxed text-slate-300">
-            I'm a full-stack software engineer based in Uppsala, holding a master's degree in Computer Science from Karlstad University. I work equally
-            comfortably on the backend — robust .NET/C# solutions with clean architecture — and the frontend, building modern web interfaces with React and
-            Blazor.
+      <!-- CHAPTER 1: About -->
+      <section id="about" class="mb-32">
+        <div class="flex items-center gap-4 mb-10 reveal">
+          <span class="text-5xl font-playfair text-mist-300 font-semibold">01</span>
+          <div class="h-px flex-1 bg-mist-300"></div>
+        </div>
+
+        <div class="reveal">
+          <h2 class="font-playfair text-3xl font-semibold text-mist-700 mb-6">About me</h2>
+          <p class="text-mist-500 leading-[1.8] mb-4">
+            I'm a full-stack software engineer with a master's degree in Computer Science from Karlstad University. I work equally comfortably on the backend — robust .NET/C# solutions with clean architecture — and the frontend, building modern web interfaces with React and Blazor.
           </p>
-          <p class="mb-6 text-lg leading-relaxed text-slate-300">
-            I'm genuinely interested in how AI can make software smarter. I've worked hands-on with LLMs, RAG pipelines, and agentic systems — integrating them
-            into real products rather than just experimenting in isolation. I care about writing code that's readable, well-tested, and built to last.
+          <p class="text-mist-500 leading-[1.8]">
+            I'm genuinely interested in how AI can make software smarter. I've worked hands-on with LLMs, RAG pipelines, and agentic systems — integrating them into real products rather than just experimenting in isolation. I care about writing code that's readable, well-tested, and built to last.
           </p>
         </div>
+      </section>
 
-        <!-- Tech Stack -->
-        <div class="mt-16 max-w-4xl">
-          <h3 class="mb-8 text-xl font-medium">Technologies I enjoy working with:</h3>
-          <div class="grid cursor-default grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#code-icon"></use>
-              </svg>
-              <span>.NET Ecosystem</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#database-icon"></use>
-              </svg>
-              <span>SQL & EF Core</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#server-icon"></use>
-              </svg>
-              <span>Generative AI</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#python-icon"></use>
-              </svg>
-              <span>Python</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#react-icon"></use>
-              </svg>
-              <span>React</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#cloud-icon"></use>
-              </svg>
-              <span>Cloud Services</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#git-branch-icon"></use>
-              </svg>
-              <span>Git</span>
-            </div>
-            <div
-              class="hover:border-primary-500/50 flex items-center rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 transition-all duration-300 hover:bg-slate-800">
-              <svg class="mr-3 h-9 w-9">
-                <use xlink:href="Assets/icons-sprite.svg#sitemap-icon"></use>
-              </svg>
-              <span>Architecture</span>
-            </div>
-          </div>
+      <!-- CHAPTER 2: Work -->
+      <section id="work" class="mb-32">
+        <div class="flex items-center gap-4 mb-10 reveal">
+          <span class="text-5xl font-playfair text-mist-300 font-semibold">02</span>
+          <div class="h-px flex-1 bg-mist-300"></div>
         </div>
-      </div>
-    </section>
 
-    <!-- Background Section -->
-    <section id="background" class="relative py-24">
-      <div class="container mx-auto px-4">
-        <h2 class="mb-16 flex items-center text-3xl font-bold">
-          <span class="bg-primary-500 mr-4 h-px w-10"></span>
-          My background
-        </h2>
+        <div class="reveal">
+          <h2 class="font-playfair text-3xl font-semibold text-mist-700 mb-2">My journey so far</h2>
+          <p class="text-mist-500 mb-10">A timeline of where I've been and what I've built.</p>
+        </div>
 
-        <div class="relative ml-0 max-w-3xl md:ml-12">
-          <div class="bg-primary-700 absolute bottom-0 left-[15px] top-0 w-px md:left-[23px]"></div>
+        <div class="space-y-0">
 
-          <!-- Timeline Item 1: Capgemini -->
-          <div class="relative mb-16 ml-10 md:ml-12">
-            <div
-              class="border-primary-600 shadow-primary-500/10 absolute -left-6 top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
-            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Feb 2024 — Present</div>
-            <h3 class="mb-1 text-2xl font-semibold">Software Engineer</h3>
-            <p class="mb-4 text-base font-medium text-indigo-400">Enterprise Software Consulting</p>
-
-            <!-- Project 1: Public Sector -->
-            <div class="mb-6">
-              <h4 class="mb-2 text-base font-semibold text-slate-200">Public Sector System Modernisation</h4>
-              <p class="mb-3 text-slate-300">
-                Part of a team that made the case for a full rewrite of a critical internal application — rather than continued maintenance — for a large public
-                sector client. The system was rebuilt from the ground up using .NET and Next.js/React, with AI embedded in the development process. End users
-                who had long requested improvements responded warmly to the new system. I took part in all client meetings and independently led the technical
-                implementation of multiple features end-to-end.
-              </p>
-              <ul class="list-outside list-disc space-y-1 pl-5 text-slate-400">
-                <li>Full rewrite with .NET backend and Next.js/React frontend</li>
-                <li>Unit, integration, and end-to-end testing throughout</li>
-                <li>Parallel maintenance of three additional applications</li>
-              </ul>
-            </div>
-
-            <!-- Project 2: Internal AI / RAG -->
+          <!-- Capgemini -->
+          <div class="timeline-item relative pl-8 pb-12 reveal">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-1 w-4 h-4 rounded-full bg-mist-700 border-2 border-mist-100"></div>
             <div>
-              <h4 class="mb-2 text-base font-semibold text-slate-200">Internal AI Development — RAG Chatbot for Knowledge Management</h4>
-              <p class="mb-3 text-slate-300">
-                The company lacked an efficient way to reuse internal knowledge across projects. I contributed to building a RAG-based chatbot that let users
-                interact with documents stored in SharePoint through an AI-powered interface — enabling semantic search, content summarisation, and contextual
-                Q&amp;A. This reduced duplicated effort and sped up onboarding and project kick-offs.
+              <span class="text-xs uppercase tracking-[0.2em] text-mist-400">February 2024 — Present</span>
+              <h3 class="font-playfair text-xl font-semibold text-mist-700 mt-1">Software Engineer</h3>
+              <p class="text-sm text-mist-500 mt-1 italic">Capgemini</p>
+              <p class="text-mist-500 mt-3 leading-relaxed">
+                Part of a team that made the case for a full rewrite of a critical internal application for a large public sector client. The system was rebuilt from the ground up using .NET and Next.js/React, with AI embedded in the development process. End users who had long requested improvements responded warmly to the new system. I took part in all client meetings and independently led the technical implementation of multiple features end-to-end.
               </p>
-              <ul class="list-outside list-disc space-y-1 pl-5 text-slate-400">
-                <li>React frontend with Python backend services</li>
-                <li>Open-source LLMs with LangChain / LlamaIndex</li>
-                <li>Retrieval-Augmented Generation over SharePoint documents</li>
-              </ul>
-            </div>
-          </div>
 
-          <!-- Timeline Item 2: Master's thesis -->
-          <div class="relative mb-16 ml-10 md:ml-12">
-            <div
-              class="border-primary-600 shadow-primary-500/10 absolute -left-6 top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
-            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">2023 — 2024</div>
-            <h3 class="mb-4 text-2xl font-semibold">Master's Thesis</h3>
-            <p class="mb-6 text-slate-300">
-              My thesis,
-              <em>Integrated Reflexion Modelling and 3D Source Code Visualization,</em>
-              evaluated the usefulness of incorporating architectural aspects into 3D source code visualization.
-            </p>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  onclick="showModal('mastersmodal1')"
-                  src="Assets/Masters/FerriesBetweenIslands.webp"
-                  alt="Visualization"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105 hover:overflow-visible" />
+              <!-- Project: Public Sector -->
+              <div class="mt-4 p-4 bg-white/50 rounded-xl border border-mist-300/40 hover-lift">
+                <h4 class="text-sm font-semibold text-mist-700 mb-1">Public Sector System Modernisation</h4>
+                <p class="text-xs text-mist-500 leading-relaxed">
+                  Full rewrite with .NET backend and Next.js/React frontend. Unit, integration, and end-to-end testing throughout. Parallel maintenance of three additional applications.
+                </p>
               </div>
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  onclick="showModal('mastersmodal2')"
-                  src="Assets/Masters/ClassDependencies.webp"
-                  alt="Visualization"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+
+              <!-- Project: RAG Chatbot -->
+              <div class="mt-3 p-4 bg-white/50 rounded-xl border border-mist-300/40 hover-lift">
+                <h4 class="text-sm font-semibold text-mist-700 mb-1">Internal AI Development — RAG Chatbot</h4>
+                <p class="text-xs text-mist-500 leading-relaxed">
+                  The company lacked an efficient way to reuse internal knowledge across projects. I contributed to building a RAG-based chatbot that let users interact with documents stored in SharePoint through an AI-powered interface — enabling semantic search, content summarisation, and contextual Q&A. React frontend with Python backend services, open-source LLMs with LangChain / LlamaIndex.
+                </p>
               </div>
             </div>
           </div>
 
-          <div
-            id="mastersmodal1"
-            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md"
-            onclick="hideModal('mastersmodal1')">
-            <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
-              <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Global Data Page" class="max-h-[75vh] object-contain" />
-              <div class="mt-3 flex justify-end">
-                <button
-                  onclick="hideModal('mastersmodal1')"
-                  class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div
-            id="mastersmodal2"
-            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md"
-            onclick="hideModal('mastersmodal2')">
-            <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
-              <img src="Assets/Masters/ClassDependencies.webp" alt="Login Page" class="max-h-[75vh] object-contain" />
-              <div class="mt-3 flex justify-end">
-                <button
-                  onclick="hideModal('mastersmodal2')"
-                  class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Timeline Item 3: Own Business -->
-          <div class="relative mb-16 ml-10 md:ml-12">
-            <div
-              class="border-primary-600 shadow-primary-500/10 absolute -left-6 top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
-            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Jan 2022 — 2024</div>
-            <h3 class="mb-4 text-2xl font-semibold">Freelance Software Development</h3>
-            <p class="mb-4 text-slate-300">
-              Ran my own software development business alongside my studies. Built a football match notification system that analysed upcoming fixtures and
-              dispatched relevant alerts to users based on custom-built algorithms — integrated against multiple external APIs and communication channels.
-            </p>
-          </div>
-
-          <!-- Timeline Item 4: Tourist Application -->
-          <div class="relative mb-16 ml-10 md:ml-12">
-            <div
-              class="border-primary-600 shadow-primary-500/10 absolute -left-6 top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
-            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Aug 2022 — Jan 2023</div>
-            <h3 class="mb-4 text-2xl font-semibold">Tourist Application</h3>
-            <p class="mb-6 text-slate-300">
-              Led UI/UX development for an Android tourist application and developer portal website, built with Java and .NET Blazor WASM. I was responsible for
-              most of the UI/UX elements in the developer portal and the Android application.
-            </p>
-            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  src="Assets/icorona/GlobalDataPage.webp"
-                  alt="Global Data Page"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
-                  onclick="showModal('modal1')" />
-              </div>
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  src="Assets/icorona/Loginpage.webp"
-                  alt="Login Page"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
-                  onclick="showModal('modal2')" />
-              </div>
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  src="Assets/icorona/StatusPage.webp"
-                  alt="Status Page"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
-                  onclick="showModal('modal3')" />
-              </div>
-              <div class="cursor-pointer overflow-hidden rounded-lg">
-                <img
-                  src="Assets/icorona/UpdateStatus.webp"
-                  alt="Update Status"
-                  class="h-auto w-full transition-transform duration-500 hover:scale-105"
-                  onclick="showModal('modal4')" />
-              </div>
-            </div>
-
-            <!-- Modals -->
-            <div id="modal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal1')">
-              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-                <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="max-h-[75vh] object-contain" />
-                <div class="mt-3 flex w-full justify-end">
-                  <button
-                    onclick="hideModal('modal1')"
-                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                    Close
-                  </button>
+          <!-- Master's Thesis -->
+          <div class="timeline-item relative pl-8 pb-12 reveal reveal-delay-1">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-1 w-4 h-4 rounded-full bg-mist-300 border-2 border-mist-100"></div>
+            <div>
+              <span class="text-xs uppercase tracking-[0.2em] text-mist-400">2018 — 2023</span>
+              <h3 class="font-playfair text-xl font-semibold text-mist-700 mt-1">Master's Thesis</h3>
+              <p class="text-sm text-mist-500 mt-1 italic">Karlstad University</p>
+              <p class="text-mist-500 mt-3 leading-relaxed">
+                My thesis, <em>Integrated Reflexion Modelling and 3D Source Code Visualization,</em> evaluated the usefulness of incorporating architectural aspects into 3D source code visualization.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('mastersmodal1')">
+                  <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Visualization" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
                 </div>
-              </div>
-            </div>
-            <div id="modal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal2')">
-              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-                <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="max-h-[75vh] object-contain" />
-                <div class="mt-3 flex w-full justify-end">
-                  <button
-                    onclick="hideModal('modal2')"
-                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modal3" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal3')">
-              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-                <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="max-h-[75vh] object-contain" />
-                <div class="mt-3 flex w-full justify-end">
-                  <button
-                    onclick="hideModal('modal3')"
-                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modal4" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal4')">
-              <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
-                <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="max-h-[75vh] object-contain" />
-                <div class="mt-3 flex w-full justify-end">
-                  <button
-                    onclick="hideModal('modal4')"
-                    class="bg-primary-600 hover:bg-primary-700 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
-                    Close
-                  </button>
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('mastersmodal2')">
+                  <img src="Assets/Masters/ClassDependencies.webp" alt="Visualization" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Timeline Item 5: Open Source -->
-          <div class="relative ml-10 md:ml-12">
-            <div
-              class="border-primary-600 shadow-primary-500/10 absolute -left-6 top-0 z-10 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 bg-slate-900 shadow-lg"></div>
-            <div class="bg-primary-700 mb-4 inline-block rounded-full px-4 py-1 text-sm text-white">Jan 2020 —</div>
-            <h3 class="mb-4 text-2xl font-semibold">Open Source & Personal Projects</h3>
-            <p class="mb-4 text-slate-300">Developing personal projects that have deepened my expertise with the .NET platform.</p>
-            <div class="flex flex-col gap-4 sm:flex-row">
-              <a
-                href="https://github.com/Spoertm/Clubber"
-                target="_blank"
-                class="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 transition-colors hover:bg-slate-700">
-                <svg class="h-5 w-5 fill-white">
-                  <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
-                </svg>
-                <span>Clubber</span>
-              </a>
-              <a
-                href="https://github.com/Spoertm/Swarmer"
-                target="_blank"
-                class="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 transition-colors hover:bg-slate-700">
-                <svg class="h-5 w-5 fill-white">
-                  <use xlink:href="Assets/icons-sprite.svg#github-logo"></use>
-                </svg>
-                <span>Swarmer</span>
-              </a>
+          <!-- Freelance -->
+          <div class="timeline-item relative pl-8 pb-12 reveal reveal-delay-1">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-1 w-4 h-4 rounded-full bg-mist-300 border-2 border-mist-100"></div>
+            <div>
+              <span class="text-xs uppercase tracking-[0.2em] text-mist-400">January 2022 — 2024</span>
+              <h3 class="font-playfair text-xl font-semibold text-mist-700 mt-1">Freelance Software Development</h3>
+              <p class="text-mist-500 mt-3 leading-relaxed">
+                Ran my own software development business alongside my studies. Built a football match notification system that analysed upcoming fixtures and dispatched relevant alerts to users based on custom-built algorithms — integrated against multiple external APIs and communication channels.
+              </p>
             </div>
+          </div>
+
+          <!-- Tourist App -->
+          <div class="timeline-item relative pl-8 pb-12 reveal reveal-delay-1">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-1 w-4 h-4 rounded-full bg-mist-300 border-2 border-mist-100"></div>
+            <div>
+              <span class="text-xs uppercase tracking-[0.2em] text-mist-400">August 2022 — January 2023</span>
+              <h3 class="font-playfair text-xl font-semibold text-mist-700 mt-1">Tourist Application</h3>
+              <p class="text-mist-500 mt-3 leading-relaxed">
+                Led UI/UX development for an Android tourist application and developer portal website, built with Java and .NET Blazor WASM. I was responsible for most of the UI/UX elements in the developer portal and the Android application.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal1')">
+                  <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+                </div>
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal2')">
+                  <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+                </div>
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal3')">
+                  <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+                </div>
+                <div class="cursor-pointer overflow-hidden rounded-lg" onclick="showModal('modal4')">
+                  <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="h-auto w-full transition-transform duration-500 hover:scale-105" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Open Source -->
+          <div class="timeline-item relative pl-8 reveal reveal-delay-2">
+            <div class="absolute left-0 top-1 w-4 h-4 rounded-full bg-mist-300 border-2 border-mist-100"></div>
+            <div>
+              <span class="text-xs uppercase tracking-[0.2em] text-mist-400">January 2020 —</span>
+              <h3 class="font-playfair text-xl font-semibold text-mist-700 mt-1">Open Source & Personal Projects</h3>
+              <p class="text-mist-500 mt-3 leading-relaxed">
+                Developing personal projects that have deepened my expertise with the .NET platform.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-3">
+                <a href="https://github.com/Spoertm/Clubber" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white/50 border border-mist-300/40 rounded-lg text-sm text-mist-700 hover:bg-white/80 transition-colors hover-lift">
+                  <svg class="h-4 w-4" fill="#1e2a24" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  Clubber
+                </a>
+                <a href="https://github.com/Spoertm/Swarmer" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white/50 border border-mist-300/40 rounded-lg text-sm text-mist-700 hover:bg-white/80 transition-colors hover-lift">
+                  <svg class="h-4 w-4" fill="#1e2a24" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  Swarmer
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHAPTER 3: Tech Stack -->
+      <section id="stack" class="mb-32">
+        <div class="flex items-center gap-4 mb-10 reveal">
+          <span class="text-5xl font-playfair text-mist-300 font-semibold">03</span>
+          <div class="h-px flex-1 bg-mist-300"></div>
+        </div>
+
+        <div class="reveal">
+          <h2 class="font-playfair text-3xl font-semibold text-mist-700 mb-2">Technologies</h2>
+          <p class="text-mist-500 mb-8">Tools I enjoy working with.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal hover-lift">
+            <p class="text-sm font-medium text-mist-700">.NET Ecosystem</p>
+            <p class="text-xs text-mist-500 mt-1">Core, ASP.NET, EF Core</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal reveal-delay-1 hover-lift">
+            <p class="text-sm font-medium text-mist-700">SQL & EF Core</p>
+            <p class="text-xs text-mist-500 mt-1">PostgreSQL, clean design</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal hover-lift">
+            <p class="text-sm font-medium text-mist-700">Generative AI</p>
+            <p class="text-xs text-mist-500 mt-1">LLMs, RAG, LangChain</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal reveal-delay-1 hover-lift">
+            <p class="text-sm font-medium text-mist-700">Python</p>
+            <p class="text-xs text-mist-500 mt-1">AI services & backends</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal hover-lift">
+            <p class="text-sm font-medium text-mist-700">React</p>
+            <p class="text-xs text-mist-500 mt-1">Modern frontend interfaces</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal reveal-delay-1 hover-lift">
+            <p class="text-sm font-medium text-mist-700">Cloud Services</p>
+            <p class="text-xs text-mist-500 mt-1">Azure, DevOps</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal hover-lift">
+            <p class="text-sm font-medium text-mist-700">Git</p>
+            <p class="text-xs text-mist-500 mt-1">GitHub, GitLab, CI/CD</p>
+          </div>
+          <div class="p-4 bg-white/40 rounded-xl border border-mist-300/30 reveal reveal-delay-1 hover-lift">
+            <p class="text-sm font-medium text-mist-700">Architecture</p>
+            <p class="text-xs text-mist-500 mt-1">Clean architecture, patterns</p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/50 py-4">
-      <div class="container mx-auto px-4 text-center md:text-left">
-        <div class="flex flex-col items-center justify-between md:flex-row">
-          <div class="mb-6 md:mb-0">
-            <div class="font-semibold">Ali Mohsen</div>
-            <div class="text-sm text-slate-400">Software Engineer & Consultant</div>
-          </div>
+      <!-- CHAPTER 4: Contact -->
+      <section id="contact" class="mb-32">
+        <div class="flex items-center gap-4 mb-10 reveal">
+          <span class="text-5xl font-playfair text-mist-300 font-semibold">04</span>
+          <div class="h-px flex-1 bg-mist-300"></div>
+        </div>
 
-          <div class="mb-6 text-sm text-slate-400 md:mb-0 md:text-left">
-            &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            All rights reserved
-          </div>
+        <div class="reveal">
+          <h2 class="font-playfair text-3xl font-semibold text-mist-700 mb-4">Let's talk</h2>
+          <p class="text-mist-500 mb-8">Open to interesting opportunities and collaborations.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 reveal">
+          <a href="mailto:alialradwy08@gmail.com" class="px-5 py-2.5 bg-mist-700 text-white rounded-full text-sm hover:bg-mist-600 transition-colors">
+            alialradwy08@gmail.com
+          </a>
+          <a href="https://github.com/Spoertm" target="_blank" class="px-5 py-2.5 bg-white/50 border border-mist-300/40 rounded-full text-sm text-mist-700 hover:bg-white/80 transition-colors">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/ali-mohsen-ab7543237/" target="_blank" class="px-5 py-2.5 bg-white/50 border border-mist-300/40 rounded-full text-sm text-mist-700 hover:bg-white/80 transition-colors">
+            LinkedIn
+          </a>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="py-8 border-t border-mist-300/30 text-center text-xs text-mist-400">
+        <p>&copy; <span id="year"></span> Ali Mohsen. Built with care.</p>
+      </footer>
+
+    </main>
+
+    <!-- Modals -->
+    <div id="mastersmodal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('mastersmodal1')">
+      <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/Masters/FerriesBetweenIslands.webp" alt="Global Data Page" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex justify-end">
+          <button onclick="hideModal('mastersmodal1')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
         </div>
       </div>
-    </footer>
+    </div>
+
+    <div id="mastersmodal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('mastersmodal2')">
+      <div class="max-w-[90vw] rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/Masters/ClassDependencies.webp" alt="Login Page" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex justify-end">
+          <button onclick="hideModal('mastersmodal2')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal1" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal1')">
+      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/icorona/GlobalDataPage.webp" alt="Global Data Page" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex w-full justify-end">
+          <button onclick="hideModal('modal1')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal2" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal2')">
+      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/icorona/Loginpage.webp" alt="Login Page" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex w-full justify-end">
+          <button onclick="hideModal('modal2')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal3" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal3')">
+      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/icorona/StatusPage.webp" alt="Status Page" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex w-full justify-end">
+          <button onclick="hideModal('modal3')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal4" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-md" onclick="hideModal('modal4')">
+      <div class="flex max-w-[90vw] flex-col items-center rounded-lg" onclick="event.stopPropagation()">
+        <img src="Assets/icorona/UpdateStatus.webp" alt="Update Status" class="max-h-[75vh] object-contain rounded-lg" />
+        <div class="mt-3 flex w-full justify-end">
+          <button onclick="hideModal('modal4')" class="bg-mist-700 hover:bg-mist-600 transform cursor-pointer select-none rounded-lg px-5 py-2 text-center font-medium text-white transition-all duration-150 hover:shadow-lg">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script>
-      async function typeWriteInterests() {
-        const interests = [".NET", "Software Architecture", "UI/UX Design", "Generative AI", "Cloud Services", "Open Source"];
-        const interestSpan = document.getElementById("interestSpan");
+      // Progress bar
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        document.getElementById('progressBar').style.width = progress + '%';
+      });
 
-        while (true) {
-          for (var currentInterest of interests) {
-            for (var i = interestSpan.innerHTML.length; i > 0; i--) {
-              interestSpan.innerHTML = interestSpan.innerHTML.slice(0, -1);
-              await sleep(12);
-            }
-
-            for (var letter of currentInterest) {
-              interestSpan.innerHTML += letter;
-              await sleep(40);
-            }
-
-            await sleep(1300);
-          }
-        }
-      }
-
-      function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-
-      typeWriteInterests();
-
-      function showModal(modalId) {
-        document.getElementById(modalId).classList.remove("hidden");
-        document.getElementById(modalId).classList.add("flex");
-        document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape") {
-            hideModal(modalId);
+      // Scroll reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
           }
         });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Modals
+      const modalEscHandlers = {};
+
+      function showModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        const handler = function (event) {
+          if (event.key === 'Escape') {
+            hideModal(modalId);
+          }
+        };
+        modalEscHandlers[modalId] = handler;
+        document.addEventListener('keydown', handler);
       }
 
       function hideModal(modalId) {
-        document.getElementById(modalId).classList.add("hidden");
-        document.getElementById(modalId).classList.remove("flex");
-        document.removeEventListener("keydown", function (event) {
-          if (event.key === "Escape") {
-            hideModal(modalId);
-          }
-        });
+        const modal = document.getElementById(modalId);
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        if (modalEscHandlers[modalId]) {
+          document.removeEventListener('keydown', modalEscHandlers[modalId]);
+          delete modalEscHandlers[modalId];
+        }
       }
 
-      // Mobile menu toggle
-      const menuToggle = document.getElementById("menu-toggle");
-      const mobileMenu = document.getElementById("mobile-menu");
+      // Mobile menu
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-      menuToggle.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-        const useElement = menuToggle.querySelector("use");
-        if (mobileMenu.classList.contains("hidden")) {
-          useElement.setAttribute("xlink:href", "Assets/icons-sprite.svg#menu-icon");
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const useElement = menuToggle.querySelector('use');
+        if (mobileMenu.classList.contains('hidden')) {
+          useElement.setAttribute('xlink:href', 'Assets/icons-sprite.svg#menu-icon');
         } else {
-          useElement.setAttribute("xlink:href", "Assets/icons-sprite.svg#close-icon");
+          useElement.setAttribute('xlink:href', 'Assets/icons-sprite.svg#close-icon');
         }
       });
 
-      // Header scroll effect
-      const header = document.querySelector("header");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          header.classList.add("shadow-lg");
-          header.classList.remove("py-3");
-        } else {
-          header.classList.remove("shadow-lg");
-          header.classList.add("py-3");
-        }
+      // Close mobile menu on link click
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuToggle.querySelector('use').setAttribute('xlink:href', 'Assets/icons-sprite.svg#menu-icon');
+        });
       });
+
+      // Year
+      const currentYear = new Date().getFullYear();
+      document.getElementById('year').textContent = currentYear;
+      document.getElementById('hero-year').textContent = currentYear;
     </script>
   </body>
 </html>
